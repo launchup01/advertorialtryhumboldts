@@ -312,7 +312,7 @@
                   <source srcset="images/flag.webp" type="image/webp">
                   <img id="flag-blue" class="prewin blue flag-img cursor-pointer" src="images/flag.png" alt="Click blue flag for discount code" width="200" height="160" />
                 </picture>
-                <div class="win win-blue"><p class="sale"><span class="sale-blue grats">50%</span></p></div>
+                <div class="win win-blue"><p class="sale"><span class="sale-blue grats">DEAL</span></p></div>
               </div>
               <div class="matreshka__item">
                 <span class="click-here">CLICK</span>
@@ -320,7 +320,7 @@
                   <source srcset="images/flag.webp" type="image/webp">
                   <img id="flag-red" class="prewin red flag-img cursor-pointer" src="images/flag.png" alt="Click red flag for discount code" width="200" height="160" />
                 </picture>
-                <div class="win win-red"><p class="sale"><span class="sale-red grats">50%</span></p></div>
+                <div class="win win-red"><p class="sale"><span class="sale-red grats">DEAL</span></p></div>
               </div>
               <div class="matreshka__item">
                 <span class="click-here">CLICK</span>
@@ -328,7 +328,7 @@
                   <source srcset="images/flag.webp" type="image/webp">
                   <img id="flag-yellow" class="prewin yellow flag-img cursor-pointer" src="images/flag.png" alt="Click yellow flag for discount code" width="200" height="160" />
                 </picture>
-                <div class="win win-yellow"><p class="sale"><span class="sale-yellow grats">50%</span></p></div>
+                <div class="win win-yellow"><p class="sale"><span class="sale-yellow grats">DEAL</span></p></div>
               </div>
             </div>
           </div>
@@ -504,8 +504,8 @@
           }, 1000);
           // Show popup after a further delay
           setTimeout(() => {
-            const discount = '50%';
-            popupMsg.textContent = `You can purchase Humboldt's Cabinet THC Gummies with a ${discount} discount.`;
+            const discount = 'DEAL';
+            popupMsg.textContent = `You can purchase Humboldt's Cabinet THC Gummies with a special ${discount}!`;
             popup.style.display = 'flex';
             // Automatically hide popup after 2 seconds and show order block
             setTimeout(() => {
@@ -513,7 +513,7 @@
               // Show order block
               orderBlock.style.display = 'flex';
               // Update button text with discount
-              orderBtn.textContent = `Order with ${discount} discount`;
+              orderBtn.textContent = `Order with Special ${discount}`;
               // Scroll into view
               orderBlock.scrollIntoView({ behavior: 'smooth' });
             }, 2000);
