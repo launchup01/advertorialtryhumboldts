@@ -15,6 +15,7 @@ header('Cache-Control: no-store');
 // Allow desktop testing without FB
 if (isset($_GET['test']) && $_GET['test'] == '1' && !isset($_GET['fbclid'])) {
   $_GET['fbclid'] = 'TEST_FBCLID';
+  $REQUIRE_FBCLID = false; // Disable fbclid requirement for testing
 }
 
 // Ignore Facebook crawler/prefetch
@@ -42,13 +43,22 @@ if ($REQUIRE_FB_REFERRER) {
 
 // Create/get session cookie (bind token to this)
 $sess = $_COOKIE[$COOKIE_NAME] ?? bin2hex(random_bytes(16));
-setcookie($COOKIE_NAME, $sess, [
+
+// For testing, also check if we're in test mode and adjust cookie settings
+$isLocalTest = isset($_GET['test']) && $_GET['test'] == '1';
+$cookieSettings = [
   'expires'  => time() + $COOKIE_TTL,
   'path'     => '/',
-  'secure'   => true,
   'httponly' => true,
   'samesite' => 'Lax',
-]);
+];
+
+// Only require secure cookies in production (HTTPS)
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+  $cookieSettings['secure'] = true;
+}
+
+setcookie($COOKIE_NAME, $sess, $cookieSettings);
 
 // Mint one-time token: token|sess|exp
 $token = bin2hex(random_bytes(16));
