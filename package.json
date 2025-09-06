@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "http-server -p 3000 -c-1 .",
-    "start": "http-server -p 3000 -c-1 ."
+    "start": "http-server -p ${PORT:-3000} -c-1 ."
   },
-  "devDependencies": {
+  "dependencies": {
     "http-server": "^14.1.1"
   }
 }
