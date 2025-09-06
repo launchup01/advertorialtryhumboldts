@@ -64,6 +64,7 @@ setcookie($COOKIE_NAME, $sess, $cookieSettings);
 $token = bin2hex(random_bytes(16));
 $exp   = time() + $TOKEN_TTL;
 
+// Try primary location first, fallback to temp directory
 $fp = @fopen($TOKENS_FILE, 'a');
 if (!$fp) {
   $TOKENS_FILE = sys_get_temp_dir() . '/tokens.txt';

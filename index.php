@@ -39,8 +39,13 @@ if (!file_exists($TOKENS_FILE)) {
 
 $fp = @fopen($TOKENS_FILE, 'c+');
 if (!$fp) {
-  header("Location: $REDIRECT_EXPIRED", true, 302);
-  exit;
+  // Try temp path fallback
+  $TOKENS_FILE = sys_get_temp_dir() . '/tokens.txt';
+  $fp = @fopen($TOKENS_FILE, 'c+');
+  if (!$fp) {
+    header("Location: $REDIRECT_EXPIRED", true, 302);
+    exit;
+  }
 }
 flock($fp, LOCK_EX);
 
