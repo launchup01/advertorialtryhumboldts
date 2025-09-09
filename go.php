@@ -25,6 +25,32 @@ if (strpos($ua, 'facebookexternalhit') !== false || strpos($ua, 'facebookcatalog
   exit;
 }
 
+// Allow Lucky Orange verification bot to pass through
+if (strpos($ua, 'luckyorange') !== false || strpos($ua, 'lucky orange') !== false) {
+  // Create a temporary token for Lucky Orange verification
+  $sess = bin2hex(random_bytes(16));
+  $token = bin2hex(random_bytes(16));
+  $exp = time() + 300; // 5 minutes
+  
+  $fp = @fopen($TOKENS_FILE, 'a');
+  if (!$fp) {
+    $TOKENS_FILE = sys_get_temp_dir() . '/tokens.txt';
+    $fp = @fopen($TOKENS_FILE, 'a');
+  }
+  if ($fp) {
+    flock($fp, LOCK_EX);
+    fwrite($fp, $token . '|' . $sess . '|' . $exp . PHP_EOL);
+    flock($fp, LOCK_UN);
+    fclose($fp);
+  }
+  
+  // Set cookie and redirect
+  setcookie($COOKIE_NAME, $sess, ['expires' => time() + 300, 'path' => '/', 'httponly' => true, 'samesite' => 'Lax']);
+  $next = '/index.php?t=' . urlencode($token);
+  header("Location: $next", true, 302);
+  exit;
+}
+
 // Require fbclid on real clicks
 $fbclid = $_GET['fbclid'] ?? '';
 if ($REQUIRE_FBCLID && $fbclid === '') {

@@ -11,6 +11,19 @@ $COOKIE_NAME = 'funnel_sess';
 // No-cache
 header('Cache-Control: no-store');
 
+// Allow Lucky Orange verification bot to access page directly
+$ua = strtolower($_SERVER['HTTP_USER_AGENT'] ?? '');
+if (strpos($ua, 'luckyorange') !== false || strpos($ua, 'lucky orange') !== false) {
+  // Bypass all token validation for Lucky Orange bot
+  $landing = __DIR__ . '/index.original.html';
+  if (is_file($landing)) {
+    include $landing;
+  } else {
+    echo "<!doctype html><meta charset='utf-8'><title>Content missing</title><style>body{font:16px system-ui;padding:3rem;max-width:720px;margin:auto}</style><h1>index.original.html not found</h1><p>Add your landing HTML at <code>index.original.html</code>.</p>";
+  }
+  exit;
+}
+
 // 1) Token required
 $token = $_GET['t'] ?? '';
 if ($token === '') {
